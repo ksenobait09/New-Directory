@@ -22,7 +22,7 @@
 
 <code> git push origin *ваша ветка* </code>
 
-Создаем merge request из вашей ветки в ветку dev на github. 
+Создаем pull request из вашей ветки в ветку dev на github. 
 
 .
 
