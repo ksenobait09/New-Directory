@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete net;
     delete ui;
 }
 
@@ -25,7 +26,6 @@ void MainWindow::on_btnSend_clicked()
     net->broadcastData(ui->txtInput->text());
     ui->txtInput->clear();
     ui->txtInput->setFocus();
-    free(net);
 }
 
 void MainWindow::on_txtInput_returnPressed()

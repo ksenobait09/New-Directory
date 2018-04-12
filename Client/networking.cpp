@@ -20,6 +20,10 @@ Networking::Networking(QObject *parent)
 
 }
 
+Networking::~Networking() {
+    delete socket;
+}
+
 void Networking::readHandler() {
     qDebug() << "read handler";
     qDebug()<<socket->readAll();

@@ -9,6 +9,7 @@ class Networking : public QTcpSocket {
 
 public:
     Networking(QObject *parent = 0);
+    ~Networking();
 
     void broadcastData(QString message);
 
