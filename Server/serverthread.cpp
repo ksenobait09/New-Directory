@@ -25,7 +25,7 @@ void ServerThread::run()
     out.setVersion(QDataStream::Qt_5_0);
     out << text;
     tcpSocket.write(block);
-
-    tcpSocket.disconnectFromHost();
+    //tcpSocket.disconnectFromHost();
+    tcpSocket.readAll();
     tcpSocket.waitForDisconnected();
 }
