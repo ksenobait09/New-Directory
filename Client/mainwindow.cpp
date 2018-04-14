@@ -1,3 +1,6 @@
+#include "QMessageBox"
+#include "QDebug"
+#include <networking.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -15,10 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     auth->show();
 //Подаем сигнал из окна авторизации и по слоту принимаем его в MainWindow в функции
     connect(auth, SIGNAL(setName(QString)), this, SLOT(recieveData(QString)));
+    net = new Networking();
 }
 
 MainWindow::~MainWindow()
 {
+    delete net;
     delete ui;
 }
 //Получаем данные из окна авторизации(пока что никнейм пользователя)
@@ -36,6 +41,7 @@ void MainWindow::on_btnSend_clicked()
         ui->txtInput->setFocus();
     }  else {
         ui->txtChat->append(userName + ": " + ui->txtInput->text());
+        net->broadcastData(ui->txtInput->text());
         ui->txtInput->clear();
         ui->txtInput->setFocus();
     }

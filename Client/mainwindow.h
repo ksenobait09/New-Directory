@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "authorization.h"
-
+#include <networking.h>
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +17,7 @@ public:
     QString userName;
 
     ~MainWindow();
+    Networking* net;
 
 public slots:
     void recieveData(QString name);
