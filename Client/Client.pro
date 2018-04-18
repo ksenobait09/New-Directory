@@ -27,11 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+        authorization.cpp \
         networking.cpp
 
 HEADERS += \
         mainwindow.h \
+        authorization.h \
         networking.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    authorization.ui
