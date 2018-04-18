@@ -29,7 +29,6 @@ void Networking::readHandler() {
     qDebug()<<socket->readAll();
 }
 
-
 void Networking::readyRead() {
     if(!socket->waitForReadyRead(500)) {
         qDebug()<<"error"<<socket->errorString();
