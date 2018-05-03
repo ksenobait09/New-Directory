@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     userName = "NoName";
-//    ui->setupUi(this);
+    ui->setupUi(this);
     ui->txtInput->setFocus();
 
     Authorization *auth = new Authorization(this);
