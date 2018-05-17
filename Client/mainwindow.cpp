@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
     auth->show();
 //Подаем сигнал из окна авторизации и по слоту принимаем его в MainWindow в функции
     connect(auth, SIGNAL(setName(QString)), this, SLOT(recieveData(QString)));
-    net = new Networking();
     //Создаем список
     Model = new QStringListModel(this);
     Model->setStringList(List);

@@ -13,18 +13,25 @@ class Server : public QTcpServer
 Q_OBJECT
 
 public:
-    Server(QObject *parent = 0);
+    Server();
     void run(int nPort);
 
-    // that's bad
-    QMultiMap<QString, QTcpSocket*> chatToSocket;
-    void sendMessage(QTcpSocket* socket, QString message);
+    static Server& Instance() {
+            static Server server;
+            return server;
+        }
+
+    // chatId refferencing sockets for rooms
+    QMultiMap<QString, QTcpSocket * > chatToSocket;
+
+    QTcpSocket * getOutConnection(QString login) { return outConnections[login]; }
+    void sendMessage(QTcpSocket * socket, QString message);
 
 protected:
 
 private:
-    QHash<QString, QTcpServer*> inConnections;
-    QHash<QString, QTcpSocket*> outConnections;
+    QHash<QString, QTcpServer * > inConnections;
+    QHash<QString, QTcpSocket * > outConnections;
 
 private slots:
     void onConnection();

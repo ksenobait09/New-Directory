@@ -20,12 +20,11 @@ public:
     QTcpSocket * getSocketIn() { return socketIn; }
 
     void sendData(QString type, QString message, QString login, QString chatId);
-    void parseData(QString data);
+    QStringList parseData(QString data);
 
 public slots:
 
     void getData();
-    void sendData();
     void getDataFromSocketIn();
 
 signals:

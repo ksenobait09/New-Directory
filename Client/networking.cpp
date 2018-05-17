@@ -20,7 +20,7 @@ Networking::Networking() {
        cmd += "&" + QString::number(socketInPort) + "&";
        cmd += QString::number(socketOutPort) + "&";
        cmd += user;
-       socket->write(cmd);
+       socket->write(cmd.toUtf8());
        socket->close();
        delete socket;
    }

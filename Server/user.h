@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "database.h"
+#include "server.h"
 
 class User : public QObject
 {
@@ -12,6 +13,7 @@ public:
     QString password;
     int id;
     Database& db = Database::Instance();
+    Server& server = Server::Instance();
 
     User(QString login, QString password);
 

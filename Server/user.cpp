@@ -1,8 +1,7 @@
 #include "user.h"
 #include "simplecrypt.h"
-#include "server.h"
-#include <qjson-qt5/parser.h>
-#include <qjson-qt5/qjson_export.h>
+//#include <qjson-qt5/parser.h>
+//#include <qjson-qt5/qjson_export.h>
 
 User::User(QString login, QString password)
 {
@@ -26,15 +25,18 @@ int User::addContact(QString login){
 }
 
 // fix usage of non-static data member
-bool User::sendMessage(int chatId, QString message){
-    // FIXME: this should be overwritten
-//    QList<QTcpSocket*> values = Server::chatToSocket.values(chatId);
-//    for (int i = 0; i < values.size(); ++i) {
-//        QTcpSocket* temp = values.at(i);
-//        Server::sendMessage(temp, message);
-//    }
+bool User::sendMessage(int chatId, QString message) {
 
-    return false;
+    QTcpSocket * socket = server.getOutConnection(this->login);
+    QString typeMessage = "MSGP";
+
+    typeMessage += "&" + this->login + "&";
+    typeMessage += chatId + "&";
+    typeMessage += message + "&";
+
+    socket->write(typeMessage.toUtf8());
+
+    return true;
 }
 
 QString User::getChatsJSON() {
