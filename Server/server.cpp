@@ -1,6 +1,4 @@
 #include "server.h"
-#include "serverthread.h"
-
 #include <stdlib.h>
 
 Server::Server(QObject *parent)
@@ -9,19 +7,9 @@ Server::Server(QObject *parent)
 
 }
 
-// Перегрузка обработки входящих соединений:
-// Создаем ещё один поток
-//
-void Server::incomingConnection(qintptr socketDescriptor)
-{
-    ServerThread *thread = new ServerThread(socketDescriptor, this);
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-    thread->start();
-}
-
-// Запуск сервера
 void Server::run(int nPort) {
-    if (!this->listen(QHostAddress::Any, nPort)) {
+    connect(this, SIGNAL(newConnection()), this, SLOT(onConnection()));
+    if (!this->listen(QHostAddress::AnyIPv4, nPort)) {
         qInfo()<<"Server Error";
         qInfo()<<"Unable to start the server:";
         qInfo()<<this->errorString();
@@ -29,4 +17,33 @@ void Server::run(int nPort) {
         return;
     }
     qInfo()<<"Server succesful started";
+}
+
+void Server::onConnection()
+{
+    QTcpSocket *socket = this->nextPendingConnection();
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+}
+
+void Server::readyRead() {
+    QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+    QString params;
+    quint16 inPort, outPort;
+    QByteArray typePacket = socket->read(4);
+    if(typePacket == "REGS") {
+        inPort = socket->read(5).toInt();
+        outPort = socket->read(5).toInt();
+        params = socket->read(32);
+
+        QTcpSocket *socketIn = new QTcpSocket;
+        QTcpSocket *socketOut = new QTcpSocket;
+
+        socketIn->connectToHost(socket->peerAddress().toString(),inPort);
+        socketOut->connectToHost(socket->peerAddress().toString(), outPort);
+
+        inConnections[params] = socketIn;
+        outConnections[params] = socketOut;
+    }
+
+    socket->close();
 }

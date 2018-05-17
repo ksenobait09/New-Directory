@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     auth->show();
 //Подаем сигнал из окна авторизации и по слоту принимаем его в MainWindow в функции
     connect(auth, SIGNAL(setName(QString)), this, SLOT(recieveData(QString)));
-    net = new Networking();
+    net = new Networking(this,"127.0.0.1", "username");
 }
 
 MainWindow::~MainWindow()

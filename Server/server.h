@@ -3,18 +3,26 @@
 
 #include <QStringList>
 #include <QTcpServer>
+#include <QTcpSocket>
+#include <QString>
 
 class Server : public QTcpServer
 {
-    Q_OBJECT
+
+Q_OBJECT
 
 public:
     Server(QObject *parent = 0);
     void run(int nPort);
-
 protected:
-    void incomingConnection(qintptr socketDescriptor) override;
 
+private:
+    QHash<QString, QTcpSocket*> inConnections;
+    QHash<QString, QTcpSocket*> outConnections;
+
+private slots:
+    void onConnection();
+    void readyRead();
 };
 
 #endif
