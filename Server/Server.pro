@@ -24,7 +24,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     server.h \
+    serverthread.h \
     database.h \
     user.h \
     simplecrypt.h
-
