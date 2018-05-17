@@ -8,18 +8,16 @@ User::User(QString login, QString password)
 
     this->login = login;
     this->password = hashPassword(password);
-    db.userRegister(login, password);
-    this->id = db.userLogin(login, password);
+    db.userRegister(login, this->password);
+    this->id = db.userLogin(login, this->password);
 }
 
 QString User::hashPassword(QString password)
 {
      SimpleCrypt crypto(Q_UINT64_C(0x0c2ad4a4acb9f023));
      QString result = crypto.encryptToString(password);
-     qDebug() << result;
      return result;
 }
-
 
 int User::addContact(QString login){
    int chatId = db.createChat(this->login, login);
