@@ -1,7 +1,5 @@
 #include "user.h"
 #include "simplecrypt.h"
-#include <qjson-qt5/parser.h>
-#include <qjson-qt5/qjson_export.h>
 
 User::User(QString login, QString password)
 {
@@ -30,5 +28,5 @@ bool User::sendMessage(int chatId, QString message){
 
 QString User::getChatsJSON() {
     db.getChatsForUser(this->id);
-
+    return "convertToJSON";
 }
