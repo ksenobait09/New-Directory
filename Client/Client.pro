@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -28,13 +28,19 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         authorization.cpp \
-        networking.cpp
+        networking.cpp \
+    settings.cpp \
+    newcontact.cpp
 
 HEADERS += \
         mainwindow.h \
         authorization.h \
-        networking.h
+        networking.h \
+    settings.h \
+    newcontact.h
 
 FORMS += \
         mainwindow.ui \
-    authorization.ui
+        authorization.ui \
+    settings.ui \
+    newcontact.ui

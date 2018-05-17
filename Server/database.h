@@ -20,6 +20,11 @@ public:
 
     int getUserIdByLogin(QString login);
 
+    QVariantList getChatsForUser(int userId);
+
+    QVariantList getChatMessagesForUser(int chatId, int userId);
+
+    QVariantList getChatMembers(int chatId, int excludeUserId = -1);
 
 protected:
 

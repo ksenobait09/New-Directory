@@ -20,6 +20,7 @@ public:
     bool sendMessage(int chatId, QString message);
 
     static QString hashPassword(QString password);
+    QString getChatsJSON();
 
 
 signals:
