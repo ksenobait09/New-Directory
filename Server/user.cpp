@@ -6,8 +6,8 @@ User::User(QString login, QString password)
 
     this->login = login;
     this->password = hashPassword(password);
-    this->id = db.userRegister(login, password);
-    db.userLogin(login, password);
+    db.userRegister(login, password);
+    this->id = db.userLogin(login, password);
 }
 
 QString User::hashPassword(QString password)

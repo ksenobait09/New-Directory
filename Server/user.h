@@ -16,6 +16,7 @@ public:
     User(QString login, QString password);
 
     int addContact(QString login);
+
     bool sendMessage(int chatId, QString message);
 
     static QString hashPassword(QString password);

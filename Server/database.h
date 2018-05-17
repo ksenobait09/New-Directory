@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDebug>
 
 // Singletone and proxy patterns
 class Database {

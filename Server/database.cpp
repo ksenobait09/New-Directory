@@ -61,7 +61,7 @@ int Database::userLogin(QString login, QString password) {
 
 int Database::getUserIdByLogin(QString login) {
     QSqlQuery query(this->db);
-    query.prepare("SELECT id FROM users WHERE login = :login and password := password");
+    query.prepare("SELECT id FROM users WHERE login = :login");
     query.bindValue(":login", login);
     // возникла ошибка или нет строки
     if (!query.exec() || !query.next()) {
