@@ -38,6 +38,8 @@ void Server::readyRead() {
         QTcpServer *socketIn = new QTcpServer;
         QTcpSocket *socketOut = new QTcpSocket;
 
+        socketOut->bind(QHostAddress::AnyIPv4);
+
         socketOut->connectToHost(socket->peerAddress().toString(), inPort);
         socketIn->listen(QHostAddress::AnyIPv4, outPort);
 

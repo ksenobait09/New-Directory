@@ -12,6 +12,9 @@ Networking::Networking() {
        socketIn = new QTcpSocket;
        socketOut = new QTcpSocket;
 
+       socketIn->bind(QHostAddress::AnyIPv4);
+       socketOut->bind(QHostAddress::AnyIPv4);
+
        connect(socketIn, SIGNAL(readyRead()), this, SLOT(getDataFromSocketIn()));
 
        quint16 socketInPort = socketIn->localPort();
