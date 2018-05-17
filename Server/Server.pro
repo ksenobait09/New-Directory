@@ -29,3 +29,4 @@ HEADERS += \
     database.h \
     user.h \
     simplecrypt.h
+
