@@ -35,15 +35,28 @@ void Server::readyRead() {
         outPort = socket->read(5).toInt();
         params = socket->read(32);
 
-        QTcpSocket *socketIn = new QTcpSocket;
+        QTcpServer *socketIn = new QTcpServer;
         QTcpSocket *socketOut = new QTcpSocket;
 
-        socketIn->connectToHost(socket->peerAddress().toString(),inPort);
         socketOut->connectToHost(socket->peerAddress().toString(), outPort);
+        socketIn->listen(QHostAddress::AnyIPv4, inPort);
 
         inConnections[params] = socketIn;
         outConnections[params] = socketOut;
+
+        connect(socketIn, SIGNAL(newConnection()), this, SLOT(clientInConnected()));
+        connect(socketOut, SIGNAL(connected()), this, SLOT(clientOutConnected()));
     }
 
     socket->close();
+}
+
+void Server::clientInConnected() {
+    QTcpSocket *socket = this->nextPendingConnection();
+    connect(socket, SIGNAL(readyRead()), this, SLOT(prepareData()));
+}
+
+void Server::clientOutConnected() {
+    QTcpSocket *socket = this->nextPendingConnection();
+    // socket should be connected to writing module
 }

@@ -2,25 +2,31 @@
 #define NETWORKING_H
 
 #include <QTcpSocket>
+#include <QString>
+#include <QHostAddress>
 
 class Networking : public QTcpSocket {
 
     Q_OBJECT
 
 public:
-    Networking(QObject *parent = 0, QString host = "null", QString user = "null");
-    ~Networking();
 
-    void broadcastData(QString message);
+    Networking(QObject *parent = 0);
 
 public slots:
-    void readyRead();
-    void readHandler();
+
+    void getData();
+    void sendData();
+
+signals:
+
 
 private:
-    QTcpSocket *socket = nullptr; //socket: addr:port
-    QDataStream *in;
 
+    QTcpSocket *socketIn = nullptr;
+    QTcpSocket *socketOut = nullptr;
+    QHostAddress host;
+    QString user = "null";
 
 };
 

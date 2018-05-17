@@ -1,5 +1,6 @@
 #include "user.h"
 #include "simplecrypt.h"
+#include "server.h"
 
 User::User(QString login, QString password)
 {
@@ -22,6 +23,14 @@ int User::addContact(QString login){
    return chatId;
 }
 
+// fix usage of non-static data member
 bool User::sendMessage(int chatId, QString message){
+    // FIXME: this should be overwritten
+//    QList<QTcpSocket*> values = Server::chatToSocket.values(chatId);
+//    for (int i = 0; i < values.size(); ++i) {
+//        QTcpSocket* temp = values.at(i);
+//        Server::sendMessage(temp, message);
+//    }
+
     return false;
 }

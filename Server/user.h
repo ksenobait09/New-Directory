@@ -27,7 +27,8 @@ signals:
 
 public slots:
 private:
-
+    // store users vs chat channels
+    QHash<QString, QString> chatChannels;
 
 };
 
