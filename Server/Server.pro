@@ -19,12 +19,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     serverthread.cpp \
     server.cpp \
+<<<<<<< HEAD
+    database.cpp \
+    user.cpp \
+    simplecrypt.cpp
+=======
     networking.cpp \
     database.cpp
+>>>>>>> b093a0be471820a735f7c71b50e5befa060751c8
 
 
 HEADERS += \
     server.h \
     serverthread.h \
+<<<<<<< HEAD
+    database.h \
+    user.h \
+    simplecrypt.h
+=======
     networking.h \
     database.h \
+>>>>>>> b093a0be471820a735f7c71b50e5befa060751c8
