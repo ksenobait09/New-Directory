@@ -20,11 +20,14 @@ SOURCES += main.cpp \
     serverthread.cpp \
     server.cpp \
     networking.cpp \
-    database.cpp
-
+    database.cpp \
+    user.cpp \
+    simplecrypt.cpp
 
 HEADERS += \
     server.h \
     serverthread.h \
     networking.h \
     database.h \
+    user.h \
+    simplecrypt.h
