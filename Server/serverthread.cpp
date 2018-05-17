@@ -26,6 +26,6 @@ void ServerThread::run()
     out << text;
     tcpSocket.write(block);
     //tcpSocket.disconnectFromHost();
-    tcpSocket.readAll();
+    qDebug() << tcpSocket.readAll();
     tcpSocket.waitForDisconnected();
 }

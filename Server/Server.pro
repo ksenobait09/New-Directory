@@ -17,40 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    serverthread.cpp \
     server.cpp \
-<<<<<<< HEAD
-    networking.cpp \
     database.cpp \
     user.cpp \
     simplecrypt.cpp
-=======
-<<<<<<< HEAD
-    database.cpp \
-    user.cpp \
-    simplecrypt.cpp
-=======
-    networking.cpp \
-    database.cpp
->>>>>>> b093a0be471820a735f7c71b50e5befa060751c8
-
->>>>>>> e2aac4930cb7c606401d958da4710331d327c445
 
 HEADERS += \
     server.h \
     serverthread.h \
-<<<<<<< HEAD
-    networking.h \
     database.h \
     user.h \
     simplecrypt.h
-=======
-<<<<<<< HEAD
-    database.h \
-    user.h \
-    simplecrypt.h
-=======
-    networking.h \
-    database.h \
->>>>>>> b093a0be471820a735f7c71b50e5befa060751c8
->>>>>>> e2aac4930cb7c606401d958da4710331d327c445

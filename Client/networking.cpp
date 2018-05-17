@@ -1,50 +1,74 @@
 #include "networking.h"
 #include <QtNetwork>
 
-Networking::Networking(QObject *parent)
-    : QTcpSocket(parent)
-{
-   socket = new QTcpSocket;
-
-   //QObject::connect(socket, SIGNAL(connected()), this, SLOT(readyRead()));
-   QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(readHandler()));
-//   QObject::connect(socket, SIGNAL(readChannelFinished()), this, SLOT(sendToServer()));
-//   QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
-//               this, SLOT(displayError(QAbstractSocket::SocketError)));
-
-   socket->bind(2324);
-   socket->connectToHost("127.0.0.1", 2323);
+Networking::Networking() {
+   QTcpSocket *socket = new QTcpSocket;
+   socket->connectToHost(host, 2323);
    if(!socket->waitForConnected()) {
-       qDebug()<<"error"<<socket->errorString();
-   } else { qDebug()<<"success"; }
+       qDebug() << "error" << socket->errorString();
+   } else {
+       qDebug()<<"success";
 
+       socketIn = new QTcpSocket;
+       socketOut = new QTcpSocket;
+
+       socketIn->bind(QHostAddress::AnyIPv4);
+       socketOut->bind(QHostAddress::AnyIPv4);
+
+       connect(socketIn, SIGNAL(readyRead()), this, SLOT(getDataFromSocketIn()));
+
+       quint16 socketInPort = socketIn->localPort();
+       quint16 socketOutPort = socketOut->localPort();
+       QString cmd = "REGS";
+       cmd += "&" + QString::number(socketInPort) + "&";
+       cmd += QString::number(socketOutPort) + "&";
+       cmd += user;
+       socket->write(cmd.toUtf8());
+       socket->close();
+       delete socket;
+   }
 }
 
-Networking::~Networking() {
-    delete socket;
-}
+void Networking::getData() {
+    QTcpSocket* socket = this;
+    QString typePacket;
+    QString message;
 
-void Networking::readHandler() {
-    qDebug() << "read handler";
-    qDebug()<<socket->readAll();
-}
+    message = socket->readAll();
+    typePacket = message.left(4);
 
-
-void Networking::readyRead() {
-    if(!socket->waitForReadyRead(500)) {
-        qDebug()<<"error"<<socket->errorString();
+    // manage packet types using first N bytes
+    if(typePacket == "ACKD") {
+        quint16 port = message.mid(4, 4).toInt();
+        // check if the line below errored due to non constant write to class member
+        socketOut->connectToHost(host, port, WriteOnly);
     }
-    QByteArray byteArray;
-    byteArray = socket->readAll();
-    qDebug() << byteArray;
 }
 
-void Networking::broadcastData(QString message) {
-    QByteArray byteArray = message.toUtf8();
-    socket->write(byteArray);
-    if(!socket->waitForBytesWritten(1000)) {
-        qDebug()<<"error"<<socket->errorString();
+void Networking::sendData(QString type, QString message, QString login, QString chatId) {
+    if(type == "MSGP") {
+        type += "&" + login + "&";
+        type += chatId + "&";
+        type += message + "&";
+        socketOut->write(type.toUtf8());
     } else {
-        qDebug()<<"successfully sent";
+        qDebug() << "Unknown packet type";
     }
+}
+
+void Networking::getDataFromSocketIn() {
+    QTcpSocket * socket = this;
+    QString data = socket->readAll();
+    QString typePacket = data.left(4);
+
+    if(typePacket == "NMSG") {
+        data.remove(4);
+        qDebug() << data;
+        QStringList newData = parseData(data);
+    }
+
+}
+
+QStringList Networking::parseData(QString data) {
+
 }

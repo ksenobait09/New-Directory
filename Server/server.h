@@ -3,18 +3,41 @@
 
 #include <QStringList>
 #include <QTcpServer>
+#include <QTcpSocket>
+#include <QString>
+#include <QMultiMap>
 
 class Server : public QTcpServer
 {
-    Q_OBJECT
+
+Q_OBJECT
 
 public:
-    Server(QObject *parent = 0);
+    Server();
     void run(int nPort);
 
-protected:
-    void incomingConnection(qintptr socketDescriptor) override;
+    static Server& Instance() {
+            static Server server;
+            return server;
+        }
 
+    // chatId refferencing sockets for rooms
+    QMultiMap<QString, QTcpSocket * > chatToSocket;
+
+    QTcpSocket * getOutConnection(QString login) { return outConnections[login]; }
+    void sendMessage(QTcpSocket * socket, QString message);
+
+protected:
+
+private:
+    QHash<QString, QTcpServer * > inConnections;
+    QHash<QString, QTcpSocket * > outConnections;
+
+private slots:
+    void onConnection();
+    void readyRead();
+    void clientInConnected();
+    void clientOutConnected();
 };
 
 #endif

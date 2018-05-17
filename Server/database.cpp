@@ -200,6 +200,5 @@ QVariantList Database::getChatMessagesForUser(int chatId, int userId) {
 }
 
 Database::~Database() {
-    QJsonDocument itemDoc = QJsonDocument::fromJson(answer);
     db.close();
 }

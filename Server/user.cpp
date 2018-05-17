@@ -22,8 +22,19 @@ int User::addContact(QString login){
    return chatId;
 }
 
-bool User::sendMessage(int chatId, QString message){
-    return false;
+// fix usage of non-static data member
+bool User::sendMessage(int chatId, QString message) {
+
+    QTcpSocket * socket = server.getOutConnection(this->login);
+    QString typeMessage = "MSGP";
+
+    typeMessage += "&" + this->login + "&";
+    typeMessage += chatId + "&";
+    typeMessage += message + "&";
+
+    socket->write(typeMessage.toUtf8());
+
+    return true;
 }
 
 QString User::getChatsJSON() {
